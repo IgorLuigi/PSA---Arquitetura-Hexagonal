@@ -14,4 +14,6 @@ public class BeanConfiguracao {
         return new TarefaServiceImpl(tarefaRepositoryPort);
     }
 
+
+
 }
