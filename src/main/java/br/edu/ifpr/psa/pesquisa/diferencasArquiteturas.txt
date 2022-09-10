@@ -1,0 +1,18 @@
+/**
+
+Arquitetura Hexagonal: a lógica da aplicação principal é escrita utilizando um conceito sem dependências externas.
+É declarado e feito referência a uma interface, porém, a implementação da mesma é feita fora do Core.
+Isso pode ser definido como uma porta/interface. Ou seja, a camada externa do aplicativo cria um "adapter" que se conecta à porta.
+Entretanto, caso exista uma porta de banco de dados, este adaptador se conectará com a porta, e ela irá fornecer uma conexão a um banco de dados específico.
+
+Arquitetura Cebola: Tem por ideia central, a definição de um núcleo dentro do sistema, com camadas ao seu redor.
+No núcleo de domínio é apresentado as regras de negócio, a camada para cima contém os serviços de domínio.
+Após existe os serviços de aplicação (que define os processos de negócios do sistema).
+Na camada externa contém a interface do usuário, conexão com infraestrutura externa.
+
+Arquitetura Limpa: É baseada com Arquitetura de Cebola, mas com detalhes distintos nas camadas, ao invés de ter nucléo de domínio,
+é referido o núcleo como Entidade, mas que representa as regras de negócios.
+Após existe os serviços de aplicação (que define os processos de negócios do sistema).
+Na camada externa contém a interface do usuário, conexão com infraestrutura externa.
+
+**/

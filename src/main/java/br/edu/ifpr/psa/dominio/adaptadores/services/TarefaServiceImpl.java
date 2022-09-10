@@ -1,33 +1,36 @@
 package br.edu.ifpr.psa.dominio.adaptadores.services;
 
-import br.edu.ifpr.psa.dominio.Tarefa;
-import br.edu.ifpr.psa.dominio.dto.TarefaDTO;
-import br.edu.ifpr.psa.dominio.portas.interfaces.TarefaServicePort;
-import br.edu.ifpr.psa.dominio.portas.repository.TarefaRepositoryPort;
+import br.edu.ifpr.psa.mapper.dto.TarefaDTO;
+import br.edu.ifpr.psa.portas.interfaces.BuscarTarefaServicePort;
+import br.edu.ifpr.psa.portas.interfaces.CriarTarefaServicePort;
+import br.edu.ifpr.psa.portas.repository.BuscarTarefaRepositoryPort;
+import br.edu.ifpr.psa.portas.repository.SalvarTarefaRepositoryPort;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class TarefaServiceImpl implements TarefaServicePort {
+@Service
+public class TarefaServiceImpl implements BuscarTarefaServicePort, CriarTarefaServicePort {
 
-    private final TarefaRepositoryPort tarefaRepository;
+    private final BuscarTarefaRepositoryPort buscarTarefaRepositoryPort;
 
-    public TarefaServiceImpl(TarefaRepositoryPort tarefaRepository) {
-        this.tarefaRepository = tarefaRepository;
+    private final SalvarTarefaRepositoryPort salvarTarefaRepositoryPort;
+
+    public TarefaServiceImpl(BuscarTarefaRepositoryPort buscarTarefaRepositoryPort, SalvarTarefaRepositoryPort salvarTarefaRepositoryPort) {
+        this.buscarTarefaRepositoryPort = buscarTarefaRepositoryPort;
+        this.salvarTarefaRepositoryPort = salvarTarefaRepositoryPort;
     }
 
     @Override
     public void criarTarefa(TarefaDTO tarefaDTO) {
-        Tarefa tarefa = new Tarefa(tarefaDTO);
 
-        this.tarefaRepository.salvar(tarefa);
+        this.salvarTarefaRepositoryPort.salvar(tarefaDTO);
     }
 
 
     @Override
     public List<TarefaDTO> buscarTarefas() {
-        List<Tarefa> tarefas = this.tarefaRepository.buscarTodos();
-        List<TarefaDTO> tarefasDTO = tarefas.stream().map(Tarefa::toTarefaDTO).collect(Collectors.toList());
+        List<TarefaDTO> tarefasDTO = this.buscarTarefaRepositoryPort.buscarTodos();
 
         return tarefasDTO;
     }
